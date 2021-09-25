@@ -18,6 +18,18 @@ Balance shoud start with 4500.0
 >>> print(acc.balance)
 4500.0
 >>> acc.commit()
+>>> check = Checking('balance.txt')
+>>> check.deposit(100)
+>>> print(check.balance)
+4600.0
+>>> check.transfer(100)
+>>> print(check.balance)
+4500.0
+>>> check.commit()
+>>> check_fee = Checking('balance.txt', 100)
+>>> check_fee.transfer(1000)
+>>> print(check_fee.balance)
+3400.0
 """
 
 
@@ -45,3 +57,13 @@ class Account:
 
         if path:
             self.filepath = old_path
+
+
+class Checking(Account):
+
+    def __init__(self, filepath, fee=0):
+        Account.__init__(self, filepath)
+        self.fee = fee
+
+    def transfer(self, amount):
+        self.balance -= amount + self.fee
