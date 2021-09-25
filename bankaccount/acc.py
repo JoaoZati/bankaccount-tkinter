@@ -30,6 +30,8 @@ Balance shoud start with 4500.0
 >>> check_fee.transfer(1000)
 >>> print(check_fee.balance)
 3400.0
+>>> print(check_fee.type)
+checking
 """
 
 
@@ -60,6 +62,14 @@ class Account:
 
 
 class Checking(Account):
+    """
+    One Checking account for transfer money
+
+    :arg filepath: Path that have a text file with a float value
+    :arg fee: float, amount of fee that will pey for transfer
+    """
+
+    type = 'checking'
 
     def __init__(self, filepath, fee=0):
         Account.__init__(self, filepath)
@@ -67,3 +77,8 @@ class Checking(Account):
 
     def transfer(self, amount):
         self.balance -= amount + self.fee
+
+
+if __name__ == '__main__':
+    check = Checking('balance.txt')
+    print(check.__doc__)
